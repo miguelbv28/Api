@@ -7,11 +7,11 @@ class Venta {
     }
 
     static async create(data) {
-        const { fecha, cantidad_vendida, subtotal, total, usuarioid_usuario, clienteid_cliente } = data;
+        const { fecha, subtotal, total, usuarioid_usuario, clienteid_cliente } = data;
         const result = await pool.query(
-            `INSERT INTO ventas (fecha, cantidad_vendida, subtotal, total, usuarioid_usuario, clienteid_cliente) 
-             VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-            [fecha, cantidad_vendida, subtotal, total, usuarioid_usuario, clienteid_cliente]
+            `INSERT INTO ventas (fecha, subtotal, total, usuarioid_usuario, clienteid_cliente) 
+             VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+            [fecha, subtotal, total, usuarioid_usuario, clienteid_cliente]
         );
         return result.rows[0];
     }
@@ -22,12 +22,12 @@ class Venta {
     }
 
     static async update(id, data) {
-        const { fecha, cantidad_vendida, subtotal, total, usuarioid_usuario, clienteid_cliente } = data;
+        const { fecha, subtotal, total, usuarioid_usuario, clienteid_cliente } = data;
         const result = await pool.query(
             `UPDATE ventas 
-            SET fecha = $1, cantidad_vendida = $2, subtotal = $3, total = $4, usuarioid_usuario = $5, clienteid_cliente = $6 
-             WHERE id_venta = $7 RETURNING *`,
-            [fecha, cantidad_vendida, subtotal, total, usuarioid_usuario, clienteid_cliente, id]
+            SET fecha = $1, subtotal = $2, total = $3, usuarioid_usuario = $4, clienteid_cliente = $5 
+             WHERE id_venta = $6 RETURNING *`,
+            [fecha, subtotal, total, usuarioid_usuario, clienteid_cliente, id]
         );
         return result.rows[0];
     }

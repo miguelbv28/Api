@@ -13,8 +13,14 @@ class UsuarioController {
 
     static async createUsuario(req, res) {
         try {
-            const usuario = await Usuario.create(req.body);
-            res.status(201).json(usuario);
+            const { usuario, contrasena, nombre, apellido_paterno, apellido_materno, email, domicilio } = req.body;
+
+            if (!usuario || !contrasena || !nombre || !apellido_paterno || !email || !domicilio) {
+                return res.status(400).json({ mensaje: "Todos los campos obligatorios deben ser proporcionados" });
+            }
+
+            const nuevoUsuario = await Usuario.create(req.body);
+            res.status(201).json(nuevoUsuario);
         } catch (error) {
             res.status(500).json({ mensaje: error.message });
         }
@@ -34,26 +40,31 @@ class UsuarioController {
 
     static async updateUsuario(req, res) {
         try {
-            const usuario = await Usuario.update(req.params.id, req.body);
-            if (!usuario) {
+            const { usuario, contrasena, nombre, apellido_paterno, apellido_materno, email, domicilio } = req.body;
+
+            if (!usuario || !contrasena || !nombre || !apellido_paterno || !email || !domicilio) {
+                return res.status(400).json({ mensaje: "Todos los campos obligatorios deben ser proporcionados" });
+            }
+
+            const usuarioActualizado = await Usuario.update(req.params.id, req.body);
+            if (!usuarioActualizado) {
                 return res.status(404).json({ mensaje: "Usuario no encontrado" });
             }
-            res.json(usuario);
+            res.json(usuarioActualizado);
         } catch (error) {
             res.status(500).json({ mensaje: error.message });
         }
     }
 
     static async deleteUsuario(req, res) {
-        const usuarioId = req.params.id;
         try {
-            const result = await Usuario.delete(usuarioId);
-            if (result === 0) {
+            const resultado = await Usuario.delete(req.params.id);
+            if (resultado === 0) {
                 return res.status(404).json({ mensaje: 'Usuario no encontrado' });
             }
             res.status(200).json({ mensaje: 'Usuario eliminado correctamente' });
-        } catch (err) {
-            res.status(500).json({ mensaje: err.message });
+        } catch (error) {
+            res.status(500).json({ mensaje: error.message });
         }
     }
 }

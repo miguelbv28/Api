@@ -7,11 +7,11 @@ class Proveedor {
     }
 
     static async create(data) {
-        const { nombre, apellidos, rfc, telefono, email, calle, colonia, cp, municipio, estado } = data;
+        const { razon_social, domicilio, rfc, telefono1, email } = data;
         const result = await pool.query(
-            `INSERT INTO proveedor (nombre, apellidos, rfc, telefono, email, calle, colonia, cp, municipio, estado) 
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
-            [nombre, apellidos, rfc, telefono, email, calle, colonia, cp, municipio, estado]
+            `INSERT INTO proveedor (razon_social, domicilio, rfc, telefono1, email) 
+             VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+            [razon_social, domicilio, rfc, telefono1, email]
         );
         return result.rows[0];
     }
@@ -22,13 +22,12 @@ class Proveedor {
     }
 
     static async update(id, data) {
-        const { nombre, apellidos, rfc, telefono, email, calle, colonia, cp, municipio, estado } = data;
+        const { razon_social, domicilio, rfc, telefono1, email } = data;
         const result = await pool.query(
             `UPDATE proveedor 
-            SET nombre = $1, apellidos = $2, rfc = $3, telefono = $4, email = $5, calle = $6, colonia = $7, 
-            cp = $8, municipio = $9, estado = $10 
-             WHERE id_proveedor = $11 RETURNING *`,
-            [nombre, apellidos, rfc, telefono, email, calle, colonia, cp, municipio, estado, id]
+            SET razon_social = $1, domicilio = $2, rfc = $3, telefono1 = $4, email = $5
+             WHERE id_proveedor = $6 RETURNING *`,
+            [razon_social, domicilio, rfc, telefono1, email, id]
         );
         return result.rows[0];
     }

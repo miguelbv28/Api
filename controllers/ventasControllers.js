@@ -13,6 +13,12 @@ class VentaController {
 
     static async createVenta(req, res) {
         try {
+            const { fecha, subtotal, total, usuarioid_usuario, clienteid_cliente } = req.body;
+            
+            if (!fecha || !subtotal || !total || !usuarioid_usuario || !clienteid_cliente) {
+                return res.status(400).json({ mensaje: "Todos los campos son obligatorios" });
+            }
+
             const venta = await Venta.create(req.body);
             res.status(201).json(venta);
         } catch (error) {
@@ -34,6 +40,12 @@ class VentaController {
 
     static async updateVenta(req, res) {
         try {
+            const { fecha, subtotal, total, usuarioid_usuario, clienteid_cliente } = req.body;
+
+            if (!fecha || !subtotal || !total || !usuarioid_usuario || !clienteid_cliente) {
+                return res.status(400).json({ mensaje: "Todos los campos son obligatorios" });
+            }
+
             const venta = await Venta.update(req.params.id, req.body);
             if (!venta) {
                 return res.status(404).json({ mensaje: "Venta no encontrada" });

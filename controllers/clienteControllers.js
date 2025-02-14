@@ -13,7 +13,8 @@ class ClienteController {
 
     static async createCliente(req, res) {
         try {
-            const cliente = await Cliente.create(req.body);
+            const { razon_social, domicilio, rfc, telefono, email } = req.body;
+            const cliente = await Cliente.create({ razon_social, domicilio, rfc, telefono, email });
             res.status(201).json(cliente);
         } catch (error) {
             res.status(500).json({ mensaje: error.message });
@@ -34,7 +35,8 @@ class ClienteController {
 
     static async updateCliente(req, res) {
         try {
-            const cliente = await Cliente.update(req.params.id, req.body);
+            const { razon_social, domicilio, rfc, telefono, email } = req.body;
+            const cliente = await Cliente.update(req.params.id, { razon_social, domicilio, rfc, telefono, email });
             if (!cliente) {
                 return res.status(404).json({ mensaje: "Cliente no encontrado" });
             }

@@ -7,11 +7,11 @@ class Usuario {
     }
 
     static async create(data) {
-        const { usuario, contraseña, nombre, apellido_paterno, apellido_materno, email, calle, colonia, cp, municipio, estado, imagen } = data;
+        const { usuario, contrasena, nombre, apellido_paterno, apellido_materno, email, domicilio } = data;
         const result = await pool.query(
-            `INSERT INTO usuario (usuario, contraseña, nombre, apellido_paterno, apellido_materno, email, calle, colonia, cp, municipio, estado, imagen) 
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
-            [usuario, contraseña, nombre, apellido_paterno, apellido_materno, email, calle, colonia, cp, municipio, estado, imagen]
+            `INSERT INTO usuario (usuario, contrasena, nombre, apellido_paterno, apellido_materno, email, domicilio) 
+             VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+            [usuario, contrasena, nombre, apellido_paterno, apellido_materno, email, domicilio]
         );
         return result.rows[0];
     }
@@ -22,13 +22,13 @@ class Usuario {
     }
 
     static async update(id, data) {
-        const { usuario, contraseña, nombre, apellido_paterno, apellido_materno, email, calle, colonia, cp, municipio, estado, imagen } = data;
+        const { usuario, contrasena, nombre, apellido_paterno, apellido_materno, email, domicilio } = data;
         const result = await pool.query(
             `UPDATE usuario 
-            SET usuario = $1, contraseña = $2, nombre = $3, apellido_paterno = $4, apellido_materno = $5, email = $6, 
-            calle = $7, colonia = $8, cp = $9, municipio = $10, estado = $11, imagen = $12 
-             WHERE id_usuario = $13 RETURNING *`,
-            [usuario, contraseña, nombre, apellido_paterno, apellido_materno, email, calle, colonia, cp, municipio, estado, imagen, id]
+            SET usuario = $1, contrasena = $2, nombre = $3, apellido_paterno = $4, apellido_materno = $5, 
+                email = $6, domicilio = $7
+             WHERE id_usuario = $8 RETURNING *`,
+            [usuario, contrasena, nombre, apellido_paterno, apellido_materno, email, domicilio, id]
         );
         return result.rows[0];
     }

@@ -67,6 +67,7 @@ class UsuarioController {
             res.status(500).json({ mensaje: error.message });
         }
     }
+    // nuevo metodo
     static async loginUsuario(req, res) {
         try {
             const { email, contrasena } = req.body;

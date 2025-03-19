@@ -8,6 +8,6 @@ router.post('/usuarios', UsuarioController.createUsuario);
 router.get('/usuarios/:id', UsuarioController.getUsuarioById);
 router.put('/usuarios/:id', UsuarioController.updateUsuario);
 router.delete('/usuarios/:id', UsuarioController.deleteUsuario);
-router.post('/login', UsuarioController.loginUsuario);
+router.post('/login', UsuarioController.loginUsuario); //ruta
 
 module.exports = router;
